@@ -1,1 +1,378 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>またこっちみてる</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 20px;
+        background: #242c33;
+        color: #ddd;
+      }
 
+      h1,
+      h2 {
+        margin-top: 0;
+        color: #fff;
+      }
+
+      .folder-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .folder {
+        background: #2c3742;
+        border: 1px solid #455666;
+        padding: 25px 20px;
+        width: 180px;
+        text-align: center;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+
+      .folder:hover {
+        background: #35414f;
+      }
+
+      .images {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 15px;
+      }
+
+      .image-item {
+        background: #2c3742;
+        border: 1px solid #455666;
+        padding: 10px;
+        text-align: center;
+        border-radius: 4px;
+      }
+
+      .image-item img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto 10px;
+      }
+
+      button {
+        margin: 5px;
+        padding: 8px 14px;
+        background: #455666;
+        color: #ddd;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #5a7290;
+      }
+
+      .nav {
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="home">
+      <h1>がぞう一覧</h1>
+      <div class="folder-list" id="folders"></div>
+    </div>
+    <div id="folder-view" style="display:none;">
+      <div class="nav">
+        <button onclick="goBack()">戻る</button>
+        <button onclick="downloadZip()">ぜんぶダウンロード</button>
+      </div>
+      <h2 id="current-folder"></h2>
+      <div class="images" id="image-list"></div>
+    </div>
+    <script>
+      let currentFolder = "";
+      const foldersData = {
+        "1": {
+          name: "スパムトンの本当の姿（嘘）",
+          path: "適当",
+          zip: "gazou/1.zip",
+          images: [{
+            name: "sharky01.png",
+            url: "gazou/1/sharky01.png"
+          }, {
+            name: "sharky02.png",
+            url: "gazou/1/sharky02.png"
+          }, {
+            name: "sharky03.png",
+            url: "gazou/1/sharky03.png"
+          }, {
+            name: "sharky04.png",
+            url: "gazou/1/sharky04.png"
+          }, {
+            name: "sharky05.png",
+            url: "gazou/1/sharky05.png"
+          }, {
+            name: "sharky06.png",
+            url: "gazou/1/sharky06.png"
+          }, {
+            name: "sharky07.png",
+            url: "gazou/1/sharky07.png"
+          }, {
+            name: "sharky08.png",
+            url: "gazou/1/sharky08.png"
+          }, {
+            name: "sharky09.png",
+            url: "gazou/1/sharky09.png"
+          }, {
+            name: "sharky10.png",
+            url: "gazou/1/sharky10.png"
+          }, {
+            name: "sharky11.png",
+            url: "gazou/1/sharky11.png"
+          }]
+        }
+        ,
+        "2": {
+          name: "テナ",
+          path: "下手クソのはしょうがない",
+          zip: "gazou/2.zip",
+          images: [
+            { name: "1.png", url: "gazou/2/1.png" },
+            { name: "2.png", url: "gazou/2/2.png" },
+            { name: "3.png", url: "gazou/2/3.png" },
+            { name: "4.png", url: "gazou/2/4.png" },
+            { name: "5.png", url: "gazou/2/5.png" },
+            { name: "6.png", url: "gazou/2/6.png" },
+            { name: "7.png", url: "gazou/2/7.png" },
+            { name: "8.png", url: "gazou/2/8.png" },
+            { name: "9.png", url: "gazou/2/9.png" },
+            { name: "10.png", url: "gazou/2/10.png" },
+            { name: "11.png", url: "gazou/2/11.png" },
+            { name: "12.png", url: "gazou/2/12.png" },
+            { name: "13.png", url: "gazou/2/13.png" },
+            { name: "14.png", url: "gazou/2/14.png" },
+            { name: "15.png", url: "gazou/2/15.png" },
+            { name: "16.png", url: "gazou/2/16.png" },
+            { name: "17.png", url: "gazou/2/17.png" },
+            { name: "18.png", url: "gazou/2/18.png" },
+            { name: "19.png", url: "gazou/2/19.png" },
+            { name: "20.png", url: "gazou/2/20.png" },
+            { name: "21.png", url: "gazou/2/21.png" },
+            { name: "22.png", url: "gazou/2/22.png" },
+            { name: "23.png", url: "gazou/2/23.png" },
+            { name: "24.png", url: "gazou/2/24.png" },
+            { name: "25.png", url: "gazou/2/25.png" },
+            { name: "26.png", url: "gazou/2/26.png" },
+            { name: "27.png", url: "gazou/2/27.png" },
+            { name: "28.png", url: "gazou/2/28.png" },
+            { name: "29.png", url: "gazou/2/29.png" },
+            { name: "30.png", url: "gazou/2/30.png" },
+            { name: "31.png", url: "gazou/2/31.png" },
+            { name: "32.png", url: "gazou/2/32.png" },
+            { name: "33.png", url: "gazou/2/33.png" },
+            { name: "34.png", url: "gazou/2/34.png" },
+            { name: "35.png", url: "gazou/2/35.png" },
+            { name: "36.png", url: "gazou/2/36.png" },
+            { name: "37.png", url: "gazou/2/37.png" },
+            { name: "38.png", url: "gazou/2/38.png" },
+            { name: "39.png", url: "gazou/2/39.png" },
+            { name: "40.png", url: "gazou/2/40.png" },
+            { name: "41.png", url: "gazou/2/41.png" },
+            { name: "42.png", url: "gazou/2/42.png" },
+            { name: "43.png", url: "gazou/2/43.png" },
+            { name: "44.png", url: "gazou/2/44.png" },
+            { name: "45.png", url: "gazou/2/45.png" },
+            { name: "46.png", url: "gazou/2/46.png" },
+            { name: "47.png", url: "gazou/2/47.png" },
+            { name: "48.png", url: "gazou/2/48.png" },
+            { name: "49.png", url: "gazou/2/49.png" },
+            { name: "50.png", url: "gazou/2/50.png" },
+            { name: "51.png", url: "gazou/2/51.png" },
+            { name: "52.png", url: "gazou/2/52.png" },
+            { name: "53.png", url: "gazou/2/53.png" },
+            { name: "54.png", url: "gazou/2/54.png" },
+            { name: "55.png", url: "gazou/2/55.png" },
+            { name: "56.png", url: "gazou/2/56.png" },
+            { name: "57.png", url: "gazou/2/57.png" },
+            { name: "58.png", url: "gazou/2/58.png" },
+            { name: "59.png", url: "gazou/2/59.png" },
+            { name: "60.png", url: "gazou/2/60.png" },
+            { name: "61.png", url: "gazou/2/61.png" },
+          ]
+          
+        }
+        ,
+         "3": {
+          name: "スパムトン",
+          path: "下手クソだけど頑張った",
+          zip: "gazou/3.zip",
+        images: [
+            { name: "1.png", url: "gazou/3/1.png" },
+            { name: "2.png", url: "gazou/3/2.png" },
+            { name: "3.png", url: "gazou/3/3.png" },
+            { name: "4.png", url: "gazou/3/4.png" },
+            { name: "5.png", url: "gazou/3/5.png" },
+            { name: "6.png", url: "gazou/3/6.png" },
+            { name: "7.png", url: "gazou/3/7.png" },
+            { name: "8.png", url: "gazou/3/8.png" },
+            { name: "9.png", url: "gazou/3/9.png" },
+            { name: "10.png", url: "gazou/3/10.png" },
+            { name: "11.png", url: "gazou/3/11.png" },
+            { name: "12.png", url: "gazou/3/12.png" },
+            { name: "13.png", url: "gazou/3/13.png" },
+            { name: "14.png", url: "gazou/3/14.png" },
+            { name: "15.png", url: "gazou/3/15.png" },
+            { name: "16.png", url: "gazou/3/16.png" },
+            { name: "17.png", url: "gazou/3/17.png" },
+            { name: "18.png", url: "gazou/3/18.png" },
+            { name: "19.png", url: "gazou/3/19.png" },
+            { name: "20.png", url: "gazou/3/20.png" },
+            { name: "21.png", url: "gazou/3/21.png" },
+            { name: "22.png", url: "gazou/3/22.png" },
+            { name: "23.png", url: "gazou/3/23.png" },
+            { name: "24.png", url: "gazou/3/24.png" },
+            { name: "25.png", url: "gazou/3/25.png" },
+            { name: "26.png", url: "gazou/3/26.png" },
+            { name: "27.png", url: "gazou/3/27.png" },
+            { name: "28.png", url: "gazou/3/28.png" },
+            { name: "29.png", url: "gazou/3/29.png" },
+            { name: "30.png", url: "gazou/3/30.png" },
+            { name: "31.png", url: "gazou/3/31.png" },
+            { name: "32.png", url: "gazou/3/32.png" },
+            { name: "33.png", url: "gazou/3/33.png" },
+            { name: "34.png", url: "gazou/3/34.png" },
+            { name: "35.png", url: "gazou/3/35.png" },
+            { name: "36.png", url: "gazou/3/36.png" },
+            { name: "37.png", url: "gazou/3/37.png" },
+            { name: "38.png", url: "gazou/3/38.png" },
+            { name: "39.png", url: "gazou/3/39.png" },
+            { name: "40.png", url: "gazou/3/40.png" },
+            { name: "41.png", url: "gazou/3/41.png" },
+            { name: "42.png", url: "gazou/3/42.png" },
+            { name: "43.png", url: "gazou/3/43.png" },
+            { name: "44.png", url: "gazou/3/44.png" },
+            { name: "45.png", url: "gazou/3/45.png" },
+            { name: "46.png", url: "gazou/3/46.png" },
+            { name: "47.png", url: "gazou/3/47.png" },
+            { name: "48.png", url: "gazou/3/48.png" },
+            { name: "49.png", url: "gazou/3/49.png" },
+            { name: "50.png", url: "gazou/3/50.png" },
+            { name: "51.png", url: "gazou/3/51.png" },
+            { name: "52.png", url: "gazou/3/52.png" },
+            { name: "53.png", url: "gazou/3/53.png" },
+            { name: "54.png", url: "gazou/3/54.png" },
+            { name: "55.png", url: "gazou/3/55.png" },
+            { name: "56.png", url: "gazou/3/56.png" },
+            { name: "57.png", url: "gazou/3/57.png" },
+            { name: "58.png", url: "gazou/3/58.png" },
+            { name: "59.png", url: "gazou/3/59.png" },
+            { name: "60.png", url: "gazou/3/60.png" },
+            { name: "61.png", url: "gazou/3/61.png" },
+            { name: "62.png", url: "gazou/3/62.png" },
+            { name: "63.png", url: "gazou/3/63.png" },
+            { name: "64.png", url: "gazou/3/64.png" },
+            { name: "65.png", url: "gazou/3/65.png" },
+            { name: "66.png", url: "gazou/3/66.png" },
+            { name: "67.png", url: "gazou/3/67.png" },
+            { name: "68.png", url: "gazou/3/68.png" },
+            { name: "69.png", url: "gazou/3/69.png" },
+            { name: "70.png", url: "gazou/3/70.png" },
+            { name: "71.png", url: "gazou/3/71.png" },
+            { name: "72.png", url: "gazou/3/72.png" },
+            { name: "73.png", url: "gazou/3/73.png" },
+            { name: "74.png", url: "gazou/3/74.png" },
+            { name: "75.png", url: "gazou/3/75.png" },
+            { name: "76.png", url: "gazou/3/76.png" },
+            { name: "77.png", url: "gazou/3/77.png" },
+          ]
+         }
+         ,
+         "4": {
+          name: "サンズ",
+          path: "まじで適当",
+          zip: "gazou/4.zip",
+          images: [
+            { name: "1.png", url: "gazou/4/1.png" },
+            { name: "2.png", url: "gazou/4/2.png" },
+            { name: "3.png", url: "gazou/4/3.png" },
+            { name: "4.png", url: "gazou/4/4.png" },
+            { name: "5.png", url: "gazou/4/5.png" },
+            { name: "6.png", url: "gazou/4/6.png" },
+            { name: "7.png", url: "gazou/4/7.png" },
+            { name: "8.png", url: "gazou/4/8.png" },
+            { name: "9.png", url: "gazou/4/9.png" },
+            { name: "10.png", url: "gazou/4/10.png" },
+          ]
+         }
+      };
+
+      function showHome() {
+        document.getElementById("home").style.display = "block";
+        document.getElementById("folder-view").style.display = "none";
+      }
+
+      function showFolder(folderKey) {
+        currentFolder = folderKey;
+        const folder = foldersData[folderKey];
+        document.getElementById("home").style.display = "none";
+        document.getElementById("folder-view").style.display = "block";
+        document.getElementById("current-folder").textContent = folder.name;
+        const container = document.getElementById("image-list");
+        container.innerHTML = "";
+        folder.images.forEach(img => {
+          const div = document.createElement("div");
+          div.className = "image-item";
+          div.innerHTML = `
+                    
+					<img src="${img.url}" alt="${img.name}">
+						<div>${img.name}</div>
+						<button onclick="downloadSingle('${img.url}', '${img.name}')">ダウンロード</button>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function goBack() {
+        showHome();
+      }
+
+      function downloadSingle(url, filename) {
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+
+      function downloadZip() {
+        const folder = foldersData[currentFolder];
+        const a = document.createElement("a");
+        a.href = folder.zip;
+        a.download = "";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+
+      function init() {
+        const container = document.getElementById("folders");
+        container.innerHTML = "";
+        Object.keys(foldersData).forEach(key => {
+          const f = foldersData[key];
+          const div = document.createElement("div");
+          div.className = "folder";
+          div.innerHTML = `
+						<strong>${f.name}</strong>
+						<br>
+							<small>${f.path}</small>`;
+          div.onclick = () => showFolder(key);
+          container.appendChild(div);
+        });
+      }
+      window.onload = init;
+    </script>
+  </body>
+</html>

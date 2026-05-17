@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>なーにみてんだよ</title>
+    <link href="icon/favicon.ico" rel="icon">
     <style>
         body {
             background-color: #242c33;
@@ -40,8 +41,8 @@
             text-decoration: underline;
         }
         button {
-            background-color: #ffffff;
-            color: #cccccc;
+            background-color: #cccccc;
+            color: #242c33;
             border: 1px solid #ffffff;
             padding: 12px 24px;
             margin: 10px 5px 10px 0;
@@ -55,6 +56,11 @@
             border: 1px solid #ffffff;
             margin: 40px 0;
         }
+        .count {
+            font-size: 18px;
+            color: #00FFFF;
+            margin: 20px 0;
+        }
         footer {
             text-align: center;
             color: #ffffff;
@@ -67,19 +73,44 @@
 
 <div class="container">
 
+    <div class="count">このページ見た人: <span id="visitCount">0</span>人</div>
 
     <h2>多分あとからもっと追加するかもしれない↓</h2>
     <div style="background:#333;color:#ccc;border:1px solid #555;padding:18px;margin:12px auto;width:80%;max-width:300px;text-align:center;cursor:pointer;" onclick="location.href='https://NekoSharky.github.io/haihu'">
     配布
-    
-</div>
+    </div>
     <hr>
     <p>
         <a href="https://www.youtube.com/channel/UCbnpuIkJHN8hDV4EULQ08gQ">youtube</a>
     </p>
 
-
 </div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+import { getDatabase, ref, onValue, increment, set } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDzvZr4xSHljxwFOYWDZDPO5Bwbwa5T_F0",
+    authDomain: "pagecount-13e06.firebaseapp.com",
+    databaseURL: "https://pagecount-13e06-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "pagecount-13e06",
+    storageBucket: "pagecount-13e06.firebasestorage.app",
+    messagingSenderId: "145942256910",
+    appId: "1:145942256910:web:92737bbe94ee245bb48b5f"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const countRef = ref(db, "visitCount");
+
+onValue(countRef, (snapshot) => {
+    const count = snapshot.val() || 0;
+    document.getElementById("visitCount").textContent = count;
+});
+
+set(countRef, increment(1));
+</script>
 
 </body>
 </html>

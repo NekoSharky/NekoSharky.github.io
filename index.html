@@ -1,116 +1,134 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>なーにみてんだよ</title>
     <link href="icon/favicon.ico" rel="icon">
     <style>
-        body {
-            background-color: #242c33;
-            color: #ffffff;
-            font-family: sans-serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.7;
-        }
-        .container {
-            max-width: 680px;
-            margin: 0 auto;
-            padding: 50px 20px;
-        }
-        h1 {
-            color: #ffffff;
-            font-size: 32px;
-            margin: 0 0 8px 0;
-        }
-        p {
-            margin: 0 0 20px 0;
-        }
-        h2 {
-            color: #ffffff;
-            font-size: 24px;
-            border-bottom: 1px solid #ffffff;
-            padding-bottom: 10px;
-            margin-top: 50px;
-        }
-        a {
-            color: #00FFFF;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        button {
-            background-color: #cccccc;
-            color: #242c33;
-            border: 1px solid #ffffff;
-            padding: 12px 24px;
-            margin: 10px 5px 10px 0;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #ffffff;
-        }
-        hr {
-            border: 1px solid #ffffff;
-            margin: 40px 0;
-        }
-        .count {
-            font-size: 18px;
-            color: #00FFFF;
-            margin: 20px 0;
-        }
-        footer {
-            text-align: center;
-            color: #ffffff;
-            margin-top: 80px;
-            font-size: 14px;
-        }
+      body {
+        background-color: #242c33;
+        color: #ffffff;
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+        line-height: 1.7;
+      }
+
+      .container {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 50px 20px;
+      }
+
+      h1 {
+        color: #ffffff;
+        font-size: 32px;
+        margin: 0 0 8px 0;
+      }
+
+      p {
+        margin: 0 0 20px 0;
+      }
+
+      h2 {
+        color: #ffffff;
+        font-size: 24px;
+        border-bottom: 1px solid #ffffff;
+        padding-bottom: 10px;
+        margin-top: 50px;
+      }
+
+      a {
+        color: #00FFFF;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      button {
+        background-color: #cccccc;
+        color: #242c33;
+        border: 1px solid #ffffff;
+        padding: 12px 24px;
+        margin: 10px 5px 10px 0;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      button:hover {
+        background-color: #ffffff;
+      }
+
+      hr {
+        border: 1px solid #ffffff;
+        margin: 40px 0;
+      }
+
+      .count {
+        font-size: 18px;
+        color: #00FFFF;
+        margin: 20px 0;
+      }
+
+      footer {
+        text-align: center;
+        color: #ffffff;
+        margin-top: 80px;
+        font-size: 14px;
+      }
+
+      gif {}
     </style>
-</head>
-<body>
-
-<div class="container">
-
-    <div class="count">このページ見た人: <span id="visitCount">0</span>人</div>
-
-    <h2>多分あとからもっと追加するかもしれない↓</h2>
-    <div style="background:#333;color:#ccc;border:1px solid #555;padding:18px;margin:12px auto;width:80%;max-width:300px;text-align:center;cursor:pointer;" onclick="location.href='https://NekoSharky.github.io/haihu'">
-    配布
-    </div>
-    <hr>
-    <p>
+  </head>
+  <body>
+    <div class="container">
+      <div class="count">このページ見た人: <span id="visitCount">0</span>人 </div>
+      <h2>多分あとからもっと追加するかもしれない↓</h2>
+      <div style="background:#333;color:#ccc;border:1px solid #555;padding:18px;margin:12px auto;width:80%;max-width:300px;text-align:center;cursor:pointer;" onclick="location.href='https://NekoSharky.github.io/haihu'"> 画像配布 </div>
+      <div>
+          <h2>[[New !!]] テナのトーテム！！</h2>
+        <p> [[ﾀﾞｳﾝﾛｰﾄﾞ]]は、、、 [[リンクは削除されました]]をｸﾘｯｸ！
+        <img class=gif src="https://github.com/NekoSharky/NekoSharky.github.io/blob/main/gif/tenna_totem.gif?raw=true" width="300" height="220" alt="">
+        </p>
+        <a href="https://github.com/NekoSharky/NekoSharky.github.io/raw/refs/heads/main/zip/Mr_Tenna_Totem.zip" download>
+          <button>[[リソースパックをダウンロード]]</button>
+        </a>
+      </div>
+      <hr>
+      <p>
         <a href="https://www.youtube.com/channel/UCbnpuIkJHN8hDV4EULQ08gQ">youtube</a>
-    </p>
-
-</div>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-import { getDatabase, ref, onValue, increment, set } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
-
-const firebaseConfig = {
-    apiKey: "AIzaSyDzvZr4xSHljxwFOYWDZDPO5Bwbwa5T_F0",
-    authDomain: "pagecount-13e06.firebaseapp.com",
-    databaseURL: "https://pagecount-13e06-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "pagecount-13e06",
-    storageBucket: "pagecount-13e06.firebasestorage.app",
-    messagingSenderId: "145942256910",
-    appId: "1:145942256910:web:92737bbe94ee245bb48b5f"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const countRef = ref(db, "visitCount");
-
-onValue(countRef, (snapshot) => {
-    const count = snapshot.val() || 0;
-    document.getElementById("visitCount").textContent = count;
-});
-
-set(countRef, increment(1));
-</script>
-
-</body>
+      </p>
+    </div>
+    <script type="module">
+      import {
+        initializeApp
+      } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        onValue,
+        increment,
+        set
+      } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
+      const firebaseConfig = {
+        apiKey: "AIzaSyDzvZr4xSHljxwFOYWDZDPO5Bwbwa5T_F0",
+        authDomain: "pagecount-13e06.firebaseapp.com",
+        databaseURL: "https://pagecount-13e06-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "pagecount-13e06",
+        storageBucket: "pagecount-13e06.firebasestorage.app",
+        messagingSenderId: "145942256910",
+        appId: "1:145942256910:web:92737bbe94ee245bb48b5f"
+      };
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+      const countRef = ref(db, "visitCount");
+      onValue(countRef, (snapshot) => {
+        const count = snapshot.val() || 0;
+        document.getElementById("visitCount").textContent = count;
+      });
+      set(countRef, increment(1));
+    </script>
+  </body>
 </html>
